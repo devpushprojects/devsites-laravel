@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Http;
 
 class SiteController extends Controller
-{   
-    public function showAllSites(Request $request): View
+{
+    public function showAllSites(): View
     {
-        $response = Http::get('http://api.requiredev.com/api/devsites/site-categories');
+        // Get DevPush API Url from config/app.php file
+        $apiUrl = config('app.devpush_api_url');
+
+        // Send a request to DevPush API to get dev site categories
+        $response = Http::get($apiUrl . '/devsites/categories');
+
+        // Convert the site category JSON data to a PHP array
         $categories = $response->json()['data'];
 
-        $response = Http::get('http://api.requiredev.com/api/devsites/sites');
+        // Send a request to DevPush API to get dev sites
+        $response = Http::get($apiUrl . '/devsites');
+        
+        // Convert the site JSON data to a PHP array
         $sites = $response->json()['data'];
 
+        // Gets and processes index.blade.php in resources/views folder
         return view(
             'index',
             [
@@ -25,14 +34,25 @@ class SiteController extends Controller
         );
     }
     
-    public function showCategorySites(Request $request, int $categoryId): View
+    public function showCategorySites(int $categoryId): View
     {
-        $response = Http::get('http://api.requiredev.com/api/devsites/site-categories');
+        // Get DevPush API Url from config/app.php file
+        $apiUrl = config('app.devpush_api_url');
+
+        // Send a request to DevPush API to get dev site categories
+        $response = Http::get($apiUrl . '/devsites/categories');
+        
+        // Convert the site category JSON data to a PHP array
         $categories = $response->json()['data'];
 
-        $response = Http::get('http://api.requiredev.com/api/devsites/sites/category/' . $categoryId);
+        // Send a request to DevPush API to get dev sites
+        $response = Http::get($apiUrl . '/devsites/categorized/' . $categoryId);
+        
+        // Convert the site category JSON data to a PHP array
         $sites = $response->json()['data'];
 
+
+        // Gets and processes index.blade.php in resources/views folder
         return view(
             'index',
             [

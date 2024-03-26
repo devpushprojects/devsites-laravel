@@ -7,15 +7,15 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     </head>
     <body>
-        <header class="">
-            <h1 class="">DevSites</h1>
-            <div class="">Technologies and services related to PHP development</div>
+        <header>
+            <h1>DevSites</h1>
+            <div>Technologies and services related to PHP development</div>
         </header>
-        <main class="">
+        <main>
             @yield('content')
             @section('sidebar')
                 <div class="categories">
-                    <h2 class="">Categories</h2>
+                    <h2>Categories</h2>
                     <a class="category" href={{ url('/') }}>All</a>
                     @foreach ($categories as $category)
                         <a class="category" href={{ url('/category/' . $category['id']) }}>
